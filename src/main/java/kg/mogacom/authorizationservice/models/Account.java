@@ -2,9 +2,8 @@ package kg.mogacom.authorizationservice.models;
 import kg.mogacom.authorizationservice.models.enums.AccountStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -15,7 +14,7 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Account{
     @Id
-    @GeneratedValue  //ключ будет генерироваться
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //ключ будет генерироваться
     Long id;
     String login;
     String password;
@@ -24,5 +23,21 @@ public class Account{
     Date addDate;
     Date updateDate;
     boolean active;
+
+
+    @PreUpdate
+    protected void onUpdate(){
+        updateDate = new Date();
+    }
+
+    @PrePersist
+    protected void onCreate(){
+        status = AccountStatus.ACTIVE;
+        addDate = new Date();
+        updateDate = new Date();
+        active = true;
+        count =0;
+
+    }
 
 }

@@ -1,12 +1,14 @@
 package kg.mogacom.authorizationservice.service;
-import kg.mogacom.authorizationservice.dao.AccountRep;
 import kg.mogacom.authorizationservice.models.Account;
-import org.springframework.beans.factory.annotation.Autowired;
+import kg.mogacom.authorizationservice.models.dto.AccountDto;
+import kg.mogacom.authorizationservice.models.request.AuthRequest;
 
-import java.util.List;
+public interface AccountService extends BaseService<AccountDto> {
 
-public interface AccountService extends BaseService<Account> {
+    String auth(AuthRequest request);
 
-    Account login(String login, String password);
+    AccountDto findByUserName(String name, boolean active);
+
+    AccountDto getByUserId(Long id);
 
 }

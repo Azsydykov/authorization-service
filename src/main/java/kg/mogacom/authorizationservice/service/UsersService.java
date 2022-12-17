@@ -1,7 +1,7 @@
 package kg.mogacom.authorizationservice.service;
 
-import kg.mogacom.authorizationservice.models.Users;
+import kg.mogacom.authorizationservice.models.dto.UsersDto;
 
-public interface UsersService extends BaseService<Users>{
+public interface UsersService extends BaseService<UsersDto>{
 
 }

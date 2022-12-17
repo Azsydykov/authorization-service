@@ -10,11 +10,11 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity   //создает нам такблицы в postgres
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users{
     @Id
-    @GeneratedValue  //ключ будет генерироваться
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  //ключ будет генерироваться
     Long id;
     String name;
 
@@ -26,5 +26,7 @@ public class Users{
     Date addDate;
     Date updateDate;
     boolean active;
+
+
 
 }

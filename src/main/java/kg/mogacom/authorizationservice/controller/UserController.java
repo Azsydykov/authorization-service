@@ -2,11 +2,10 @@ package kg.mogacom.authorizationservice.controller;
 
 
 import io.swagger.annotations.Api;
-import kg.mogacom.authorizationservice.models.Account;
+import io.swagger.annotations.ApiOperation;
 import kg.mogacom.authorizationservice.models.Users;
-import kg.mogacom.authorizationservice.service.AccountService;
+import kg.mogacom.authorizationservice.models.dto.UsersDto;
 import kg.mogacom.authorizationservice.service.UsersService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,23 +20,27 @@ public class UserController {
     @Autowired
     private UsersService service;
 
-    @PostMapping()
-    Users save(@RequestBody Users users) {
+    @PostMapping("/save")
+    @ApiOperation("Сохранение")
+    UsersDto save(@RequestBody UsersDto users) {
         return service.save(users);
     }
 
     @GetMapping("/findById")
-    Users findById(@RequestParam Long id) {
+    @ApiOperation("Поиск пользователя по id")
+    UsersDto findById(@RequestParam Long id) {
         return service.findById(id);
     }
 
     @GetMapping("/findAll")
-    List<Users> findAll() {
+    @ApiOperation("Вывод всех пользователей")
+    List<UsersDto> findAll() {
         return service.findAll();
     }
 
     @DeleteMapping("/delete")
-    Users delete(@RequestParam Long id) {
+    @ApiOperation("Удаление")
+    UsersDto delete(@RequestParam Long id) {
         return service.delete(id);
     }
 
