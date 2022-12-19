@@ -1,6 +1,6 @@
 package kg.mogacom.authorizationservice.dao;
 
-import kg.mogacom.authorizationservice.models.Account;
+import kg.mogacom.authorizationservice.models.entities.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

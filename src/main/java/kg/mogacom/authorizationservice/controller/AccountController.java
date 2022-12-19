@@ -2,7 +2,6 @@ package kg.mogacom.authorizationservice.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import kg.mogacom.authorizationservice.models.Account;
 import kg.mogacom.authorizationservice.models.dto.AccountDto;
 import kg.mogacom.authorizationservice.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;

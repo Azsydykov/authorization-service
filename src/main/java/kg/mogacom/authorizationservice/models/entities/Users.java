@@ -1,6 +1,7 @@
-package kg.mogacom.authorizationservice.models;
+package kg.mogacom.authorizationservice.models.entities;
 
 
+import kg.mogacom.authorizationservice.models.entities.Account;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import javax.persistence.*;

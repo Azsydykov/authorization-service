@@ -2,7 +2,6 @@ package kg.mogacom.authorizationservice.service.impl;
 
 import kg.mogacom.authorizationservice.dao.AccountRep;
 import kg.mogacom.authorizationservice.mappers.AccountMapper;
-import kg.mogacom.authorizationservice.models.Account;
 import kg.mogacom.authorizationservice.models.dto.AccountDto;
 import kg.mogacom.authorizationservice.models.enums.AccountStatus;
 import kg.mogacom.authorizationservice.models.request.AuthRequest;
@@ -44,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountDto> findAll() {
-        return mapper.toDto(rep.findAll());
+        return mapper.toDtos(rep.findAll());
     }
 
     @Override

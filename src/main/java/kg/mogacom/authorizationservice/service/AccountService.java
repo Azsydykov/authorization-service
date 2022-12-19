@@ -1,5 +1,4 @@
 package kg.mogacom.authorizationservice.service;
-import kg.mogacom.authorizationservice.models.Account;
 import kg.mogacom.authorizationservice.models.dto.AccountDto;
 import kg.mogacom.authorizationservice.models.request.AuthRequest;
 

@@ -52,6 +52,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public List<UsersDto> findAll() {
-        return mapper.toDto(rep.findAll());
+        return mapper.toDtos(rep.findAll());
     }
 }
