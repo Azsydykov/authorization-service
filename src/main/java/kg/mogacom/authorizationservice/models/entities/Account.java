@@ -16,9 +16,11 @@ public class Account{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //ключ будет генерироваться
     Long id;
+    @Column(unique = true)
     String login;
     String password;
     int count;
+    @Enumerated(EnumType.STRING)
     AccountStatus status;
     Date addDate;
     Date updateDate;

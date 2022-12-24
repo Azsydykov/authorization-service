@@ -3,8 +3,11 @@ package kg.mogacom.authorizationservice.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kg.mogacom.authorizationservice.models.dto.AccountDto;
+import kg.mogacom.authorizationservice.models.request.AuthRequest;
 import kg.mogacom.authorizationservice.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,17 +26,32 @@ public class AccountController {
         return service.save(account);
     }
 
+    @PostMapping("/create")
+    @ApiOperation("Создание аккаунта")
+    ResponseEntity<String> save(@RequestBody AuthRequest request) {
+        try{
+            return ResponseEntity.ok(service.create(request));
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.I_AM_A_TEAPOT);
+        }
+    }
+
     @GetMapping("/findById")
     @ApiOperation("Поиск аккаунта по ID")
-    AccountDto findById(@RequestParam Long id) {
-        return service.findById(id);
+    ResponseEntity<AccountDto> findById(@RequestParam Long id) {
+        try{
+            return ResponseEntity.ok(service.findById(id));
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
 
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех аккаунтов")
     List<AccountDto> findAll() {
-        return service.findAll();
+            return service.findAll();
+
     }
 
     @DeleteMapping("/delete")

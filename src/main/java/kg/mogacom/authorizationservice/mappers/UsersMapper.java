@@ -8,9 +8,4 @@ import org.mapstruct.factory.Mappers;
 public interface UsersMapper extends BaseMapper<Users, UsersDto>{
     UsersMapper INSTANCE= Mappers.getMapper(UsersMapper.class);
 
-
-//    Users toEntity(UsersDto userDto);
-//    UsersDto toDto(Users user);
-//
-//    List<UsersDto> toDto(List<Users> all);
 }

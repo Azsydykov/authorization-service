@@ -9,9 +9,4 @@ import org.mapstruct.factory.Mappers;
 public interface AccountMapper extends BaseMapper<Account, AccountDto>{
     AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
-//    Account toEntity(AccountDto accountDto);
-//
-//    AccountDto toDto(Account account);
-//
-//    List<AccountDto> toDto(List<Account> all);
 }

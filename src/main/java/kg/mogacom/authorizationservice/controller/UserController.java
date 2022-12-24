@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiOperation;
 import kg.mogacom.authorizationservice.models.dto.UsersDto;
 import kg.mogacom.authorizationservice.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +29,12 @@ public class UserController {
 
     @GetMapping("/findById")
     @ApiOperation("Поиск пользователя по id")
-    UsersDto findById(@RequestParam Long id) {
-        return service.findById(id);
+    ResponseEntity<UsersDto> findById(@RequestParam Long id) {
+       try{
+           return ResponseEntity.ok(service.findById(id));
+       }catch (Exception e){
+           return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+       }
     }
 
     @GetMapping("/findAll")

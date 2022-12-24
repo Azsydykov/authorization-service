@@ -10,4 +10,6 @@ public interface AccountService extends BaseService<AccountDto> {
 
     AccountDto getByUserId(Long id);
 
+    String create(AuthRequest request);
+
 }

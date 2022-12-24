@@ -14,6 +14,7 @@ import java.util.Date;
 @Entity   //создает нам такблицы в postgres
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Users{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //ключ будет генерироваться
     Long id;

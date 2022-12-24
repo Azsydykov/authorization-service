@@ -1,12 +1,15 @@
 package kg.mogacom.authorizationservice.service.impl;
 
 import kg.mogacom.authorizationservice.dao.AccountRep;
+import kg.mogacom.authorizationservice.exceptions.AccountNotFoundExc;
+import kg.mogacom.authorizationservice.exceptions.AuthExc;
 import kg.mogacom.authorizationservice.mappers.AccountMapper;
 import kg.mogacom.authorizationservice.models.dto.AccountDto;
 import kg.mogacom.authorizationservice.models.enums.AccountStatus;
 import kg.mogacom.authorizationservice.models.request.AuthRequest;
 import kg.mogacom.authorizationservice.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +29,36 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDto save(AccountDto account) {
-        return mapper.toDto(rep.save(mapper.toEntity(account)));
+        try{
+            return mapper.toDto(rep.save(mapper.toEntity(account)));
+        }catch (DataIntegrityViolationException e){
+            throw new RuntimeException("Логин уже существует!");
+        }
+    }
+
+
+    @Override
+    public String create(AuthRequest request) {
+        try {
+            if(request.getLogin()==null || request.getLogin().isEmpty()){
+                throw new RuntimeException("Логин не может быть пустым!");
+            }
+
+            AccountDto accountDto = new AccountDto();
+            accountDto.setPassword(request.getPassword());
+            accountDto.setLogin(request.getLogin());
+            save(accountDto);
+            return  "Success";
+        }catch (DataIntegrityViolationException e){
+            throw new RuntimeException("Аккаунт с таким логином уже существует!");
+        }catch (Exception e){
+            throw new RuntimeException("Произошла неизвестная ошибка!");
+        }
     }
 
     @Override
     public AccountDto findById(Long id) {
-        return mapper.toDto(rep.findById(id).orElseThrow(() -> new RuntimeException("Аккаунт не найден!")));
+        return mapper.toDto(rep.findById(id).orElseThrow(() -> new AccountNotFoundExc("Аккаунт не найден!")));
     }
 
     @Override
@@ -48,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String auth(AuthRequest request) {
-        AccountDto account= mapper.toDto(rep.findByLogin(request.getLogin()).orElseThrow(()->new RuntimeException("Пользователь не найден")));
+        AccountDto account= mapper.toDto(rep.findByLogin(request.getLogin()).orElseThrow(()-> new AccountNotFoundExc("Пользователь не найден")));
         switch (account.getStatus()){
             case ACTIVE:
                 break;
@@ -68,7 +95,6 @@ public class AccountServiceImpl implements AccountService {
             save(account);
             return "Success";
         }else {
-
             if (account.getCount()>=3){
                 account.setStatus(AccountStatus.BLOCKED);
                 save(account);
@@ -97,4 +123,6 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto getByUserId(Long id) {
         return mapper.toDto(rep.findbyUserId(id));
     }
+
+
 }
