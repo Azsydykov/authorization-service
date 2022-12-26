@@ -23,18 +23,23 @@ public class UserController {
 
     @PostMapping("/save")
     @ApiOperation("Сохранение")
-    UsersDto save(@RequestBody UsersDto users) {
-        return service.save(users);
+    ResponseEntity<?> save(@RequestBody UsersDto users) {
+        try {
+            return new ResponseEntity<>(service.save(users), HttpStatus.CREATED);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping("/findById")
     @ApiOperation("Поиск пользователя по id")
     ResponseEntity<UsersDto> findById(@RequestParam Long id) {
-       try{
-           return ResponseEntity.ok(service.findById(id));
-       }catch (Exception e){
-           return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-       }
+        try {
+            return new ResponseEntity(service.findById(id),HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/findAll")

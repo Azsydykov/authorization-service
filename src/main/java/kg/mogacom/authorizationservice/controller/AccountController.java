@@ -30,17 +30,17 @@ public class AccountController {
     @ApiOperation("Создание аккаунта")
     ResponseEntity<String> save(@RequestBody AuthRequest request) {
         try{
-            return ResponseEntity.ok(service.create(request));
+            return new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.I_AM_A_TEAPOT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @GetMapping("/findById")
     @ApiOperation("Поиск аккаунта по ID")
-    ResponseEntity<AccountDto> findById(@RequestParam Long id) {
+    ResponseEntity<?> findById(@RequestParam Long id) {
         try{
-            return ResponseEntity.ok(service.findById(id));
+            return new ResponseEntity<>(service.findById(id),HttpStatus.FOUND);
         }catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
