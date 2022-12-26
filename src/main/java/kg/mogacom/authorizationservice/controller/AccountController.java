@@ -22,13 +22,17 @@ public class AccountController {
 
     @PostMapping("/save")
     @ApiOperation("Сохранение")
-    AccountDto save(@RequestBody AccountDto account) {
-        return service.save(account);
+    ResponseEntity<?> save(@RequestBody AccountDto account) {
+        try{
+            return new ResponseEntity<>(service.save(account),HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("/create")
     @ApiOperation("Создание аккаунта")
-    ResponseEntity<String> save(@RequestBody AuthRequest request) {
+    ResponseEntity<?> save(@RequestBody AuthRequest request) {
         try{
             return new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
         }catch (Exception e){

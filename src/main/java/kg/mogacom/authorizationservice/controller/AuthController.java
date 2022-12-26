@@ -16,9 +16,9 @@ public class AuthController {
     private AccountService service;
 
     @PostMapping("/sing/in")
-    ResponseEntity<String> auth(@RequestBody AuthRequest request ){
+    ResponseEntity<?> auth(@RequestBody AuthRequest request ){
         try{
-            return ResponseEntity.ok(service.auth(request));
+            return new ResponseEntity<>(service.auth(request),HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }

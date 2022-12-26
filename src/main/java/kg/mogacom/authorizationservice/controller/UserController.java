@@ -27,14 +27,13 @@ public class UserController {
         try {
             return new ResponseEntity<>(service.save(users), HttpStatus.CREATED);
         } catch (Exception e) {
-
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @GetMapping("/findById")
     @ApiOperation("Поиск пользователя по id")
-    ResponseEntity<UsersDto> findById(@RequestParam Long id) {
+    ResponseEntity<?> findById(@RequestParam Long id) {
         try {
             return new ResponseEntity(service.findById(id),HttpStatus.FOUND);
         } catch (Exception e) {
