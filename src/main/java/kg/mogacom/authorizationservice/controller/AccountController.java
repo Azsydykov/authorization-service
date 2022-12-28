@@ -23,19 +23,19 @@ public class AccountController {
     @PostMapping("/save")
     @ApiOperation("Сохранение")
     ResponseEntity<?> save(@RequestBody AccountDto account) {
-        try{
-            return new ResponseEntity<>(service.save(account),HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        try {
+            return new ResponseEntity<>(service.save(account), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
     @PostMapping("/create")
     @ApiOperation("Создание аккаунта")
     ResponseEntity<?> save(@RequestBody AuthRequest request) {
-        try{
+        try {
             return new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
@@ -43,9 +43,9 @@ public class AccountController {
     @GetMapping("/findById")
     @ApiOperation("Поиск аккаунта по ID")
     ResponseEntity<?> findById(@RequestParam Long id) {
-        try{
-            return new ResponseEntity<>(service.findById(id),HttpStatus.FOUND);
-        }catch (Exception e){
+        try {
+            return new ResponseEntity<>(service.findById(id), HttpStatus.FOUND);
+        } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -54,8 +54,7 @@ public class AccountController {
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех аккаунтов")
     ResponseEntity<List<AccountDto>> findAll() {
-            return ResponseEntity.ok(service.findAll());
-
+        return ResponseEntity.ok(service.findAll());
     }
 
     @DeleteMapping("/delete")
@@ -63,27 +62,34 @@ public class AccountController {
     ResponseEntity<?> delete(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(service.delete(id));
-        }catch (Exception e){
-            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-
     }
 
     @GetMapping("/test")
-    String test(@RequestParam List<Integer> id){
+    String test(@RequestParam List<Integer> id) {
         System.out.println(id);
         return "success";
     }
 
 
     @GetMapping("/get/by/name")
-    AccountDto getByUserName(@RequestParam String name,@RequestParam boolean active) {
-        return service.findByUserName(name, active);
+    ResponseEntity<?> getByUserName(@RequestParam String name, @RequestParam boolean active) {
+        try {
+            return new ResponseEntity<>(service.findByUserName(name, active), HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/get/by/id")
-    AccountDto getByUserId(@RequestParam Long id) {
-        return service.getByUserId(id);
+    ResponseEntity<?> getByUserId(@RequestParam Long id) {
+        try {
+            return new ResponseEntity<>(service.getByUserId(id), HttpStatus.FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
 }

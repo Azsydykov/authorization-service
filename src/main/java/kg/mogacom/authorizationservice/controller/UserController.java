@@ -35,7 +35,7 @@ public class UserController {
     @ApiOperation("Поиск пользователя по id")
     ResponseEntity<?> findById(@RequestParam Long id) {
         try {
-            return new ResponseEntity(service.findById(id),HttpStatus.FOUND);
+            return new ResponseEntity(service.findById(id), HttpStatus.FOUND);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -53,8 +53,8 @@ public class UserController {
     ResponseEntity<?> delete(@RequestParam Long id) {
         try {
             return ResponseEntity.ok(service.delete(id));
-        }catch (Exception e){
-            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
 
     }

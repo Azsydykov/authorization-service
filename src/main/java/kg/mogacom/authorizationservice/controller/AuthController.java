@@ -16,14 +16,13 @@ public class AuthController {
     private AccountService service;
 
     @PostMapping("/sing/in")
-    ResponseEntity<?> auth(@RequestBody AuthRequest request ){
-        try{
+    ResponseEntity<?> auth(@RequestBody AuthRequest request) {
+        try {
             return ResponseEntity.ok(service.auth(request));
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
-
 
 
 }
