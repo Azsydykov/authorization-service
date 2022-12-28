@@ -18,7 +18,7 @@ public class AuthController {
     @PostMapping("/sing/in")
     ResponseEntity<?> auth(@RequestBody AuthRequest request ){
         try{
-            return new ResponseEntity<>(service.auth(request),HttpStatus.OK);
+            return ResponseEntity.ok(service.auth(request));
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }

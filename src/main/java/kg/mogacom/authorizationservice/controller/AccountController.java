@@ -53,15 +53,20 @@ public class AccountController {
 
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех аккаунтов")
-    List<AccountDto> findAll() {
-            return service.findAll();
+    ResponseEntity<List<AccountDto>> findAll() {
+            return ResponseEntity.ok(service.findAll());
 
     }
 
     @DeleteMapping("/delete")
     @ApiOperation("Удаление")
-    AccountDto delete(@RequestParam Long id) {
-        return service.delete(id);
+    ResponseEntity<?> delete(@RequestParam Long id) {
+        try {
+            return ResponseEntity.ok(service.delete(id));
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @GetMapping("/test")

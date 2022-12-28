@@ -43,14 +43,20 @@ public class UserController {
 
     @GetMapping("/findAll")
     @ApiOperation("Вывод всех пользователей")
-    List<UsersDto> findAll() {
-        return service.findAll();
+    ResponseEntity<List<UsersDto>> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
+
 
     @DeleteMapping("/delete")
     @ApiOperation("Удаление")
-    UsersDto delete(@RequestParam Long id) {
-        return service.delete(id);
+    ResponseEntity<?> delete(@RequestParam Long id) {
+        try {
+            return ResponseEntity.ok(service.delete(id));
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }
